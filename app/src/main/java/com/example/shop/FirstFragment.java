@@ -90,7 +90,7 @@ public class FirstFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 int length = inputText.getText().length();
-                if (length == 7) enableButton();
+                if (length == 8) enableButton();
                 else disableButton();
             }
         });

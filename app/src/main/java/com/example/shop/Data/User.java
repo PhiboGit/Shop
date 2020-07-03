@@ -11,14 +11,32 @@ public class User {
 
     private String name = "";
 
-
-    private int c30, c40, c50, c60, c80, c100, c120;
+    private int c30, c40, c50, c60, c80, c100, c120, c400, flatWeek;
 
     public User(int personalNummer, String name) {
         this.personalNummer = personalNummer;
         this.name = name;
 
     }
+
+    public User(User user) {
+        this.personalNummer = user.personalNummer;
+        this.name = user.name;
+        this.c30 = user.c30;
+        this.c40 = user.c40;
+        this.c50 = user.c50;
+        this.c60 = user.c60;
+        this.c80 = user.c80;
+        this.c100 = user.c100;
+        this.c120 = user.c120;
+        this.c400 = user.c400;
+        this.flatWeek = user.flatWeek;
+    }
+
+    public int getSchulden() {
+        return c30*30 + c40*40 + c50*50 + c60*60 + c80*80 + c100*100 + c120*120 + c400*400;
+    }
+
 
     public String getName() {
         return name;
@@ -86,5 +104,21 @@ public class User {
 
     public void setC120(int c120) {
         this.c120 = c120;
+    }
+
+    public int getC400() {
+        return c400;
+    }
+
+    public void setC400(int c400) {
+        this.c400 = c400;
+    }
+
+    public int getFlatWeek() {
+        return flatWeek;
+    }
+
+    public void setFlatWeek(int flatWeek) {
+        this.flatWeek = flatWeek;
     }
 }

@@ -28,7 +28,7 @@ public abstract class UserDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             UserDatabase.class, "user_database")
-                            .addCallback(sRoomDatabaseCallback)
+                            //.addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
@@ -49,10 +49,8 @@ public abstract class UserDatabase extends RoomDatabase {
                 UserDAO dao = INSTANCE.userDAO();
                 dao.deleteAll();
 
-                User user1 = new User(1111111, "name1");
+                User user1 = new User(12345678, "ADMIN");
                 dao.insert(user1);
-                User user2 = new User(2, "name2");
-                dao.insert(user2);
             });
         }
     };

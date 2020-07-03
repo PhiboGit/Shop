@@ -69,7 +69,7 @@
 
     <Button
         android:id="@+id/button_back"
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="24dp"
@@ -84,6 +84,7 @@
         android:layout_width="44dp"
         android:layout_height="32dp"
         android:layout_marginBottom="20dp"
+        android:text="Count"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.042"
@@ -127,12 +128,13 @@
 
     <TextView
         android:id="@+id/textView_ID"
-        android:layout_width="90dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="24dp"
-        android:text="TextView"
+        android:text="Personalnummer"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button_back"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -140,9 +142,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="TextView"
+        android:text="Name"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_ID" />
+
+    <Button
+        android:id="@+id/button_buchen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:text="Bestätigen"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_schulden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="50dp"
+        android:text="0,00€"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_buchung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="100dp"
+        android:text="0,00€"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

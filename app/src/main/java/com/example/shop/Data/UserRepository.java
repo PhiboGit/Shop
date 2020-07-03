@@ -26,6 +26,12 @@ public class UserRepository {
         return userDAO.getUserByID(id);
     }
 
+    void update(final User user){
+        UserDatabase.databaseWriteExecutor.execute(() -> {
+            userDAO.update(user);
+        });
+    }
+
     void insert(final User user){
         UserDatabase.databaseWriteExecutor.execute(() -> {
             userDAO.insertAll(user);

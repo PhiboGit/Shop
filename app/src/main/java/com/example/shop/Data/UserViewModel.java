@@ -24,6 +24,10 @@ public class UserViewModel extends AndroidViewModel {
         return repository.getUserByID(id);
     }
 
+    public void update(User user){
+        repository.update(user);
+    }
+
     public LiveData<List<User>> getAllUser() {
         return allUser;
     }
@@ -31,4 +35,6 @@ public class UserViewModel extends AndroidViewModel {
     public void insert(User user){
         repository.insert(user);
     }
+
+
 }

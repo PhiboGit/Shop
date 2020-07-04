@@ -8,6 +8,8 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
+import android.text.method.KeyListener;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.room.util.StringUtil;
 
 import com.example.shop.Data.User;
 import com.example.shop.Data.UserViewModel;
@@ -30,6 +33,8 @@ import com.example.shop.Data.UserViewModel;
 import java.util.List;
 
 public class FirstFragment extends Fragment {
+
+    final int andminID = 00000000;
 
     UserViewModel viewModel;
     Button buttonLogin;
@@ -62,11 +67,15 @@ public class FirstFragment extends Fragment {
         inputText.setTransformationMethod(null);
 
         buttonLogin.setOnClickListener(view1 -> {
+
             //add new user
             int newUserId = Integer.parseInt(inputText.getText().toString());
 
+            if (newUserId == andminID){
+                NavHostFragment.findNavController(FirstFragment.this).navigate(R.id.action_FirstFragment_to_adminFragment);
+            }
             //if user does not already exists open dialog to enter name
-            if (!isUserByIDinList(newUserId)){
+            else if (!isUserByIDinList(newUserId)){
                 openDialog(newUserId);
             }
             else {
@@ -112,18 +121,19 @@ public class FirstFragment extends Fragment {
         NavHostFragment.findNavController(FirstFragment.this).navigate(R.id.action_FirstFragment_to_SecondFragment, bundle);
     }
 
+    private String nachname;
+
     private void openDialog(int userID){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Vor- und Nachname");
+        builder.setTitle("Nachname");
         final EditText input = new EditText(getContext());
-        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         input.setFilters(new InputFilter[] {
                 (cs, start, end, spanned, dStart, dEnd) -> {
                     // TODO Auto-generated method stub
                     if(cs.equals("")){ // for backspace
                         return cs;
                     }
-                    if(cs.toString().matches("[a-zA-Z ÖÜÄß]+")){
+                    if(cs.toString().matches("[a-zA-ZÖÜÄß]+")){
                         return cs;
                     }
                     return "";
@@ -134,7 +144,46 @@ public class FirstFragment extends Fragment {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                viewModel.insert(new User(userID, input.getText().toString()));
+                nachname= input.getText().toString().toLowerCase();
+                nachname = nachname.substring(0,1).toUpperCase() + nachname.substring(1);
+                openDialog2(userID);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
+
+    private void openDialog2(int userID){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Vorname");
+        final EditText input = new EditText(getContext());
+        input.setFilters(new InputFilter[] {
+                (cs, start, end, spanned, dStart, dEnd) -> {
+                    // TODO Auto-generated method stub
+                    if(cs.equals("")){ // for backspace
+                        return cs;
+                    }
+                    if(cs.toString().matches("[a-zA-ZÖÜÄß]+")){
+                        return cs;
+                    }
+                    return "";
+                }
+        });
+        builder.setView(input);
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String vorname = input.getText().toString().toLowerCase();
+                vorname = vorname.substring(0,1).toUpperCase() + vorname.substring(1);
+                String fullname = nachname + ", " + vorname;
+                viewModel.insert(new User(userID, fullname));
                 navToSecondFragment(userID);
             }
         });

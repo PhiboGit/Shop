@@ -37,4 +37,10 @@ public class UserRepository {
             userDAO.insertAll(user);
         });
     }
+
+    void deleteUserByID(int id){
+        UserDatabase.databaseWriteExecutor.execute(() -> {
+            userDAO.deleteUserByID(id);
+        });
+    }
 }

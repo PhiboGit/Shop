@@ -2,10 +2,8 @@ package com.example.shop.Data;
 
 import android.app.Application;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 
 import java.util.List;
 
@@ -34,6 +32,10 @@ public class UserViewModel extends AndroidViewModel {
 
     public void insert(User user){
         repository.insert(user);
+    }
+
+    public void deleteUserByID(int id){
+        repository.deleteUserByID(id);
     }
 
 

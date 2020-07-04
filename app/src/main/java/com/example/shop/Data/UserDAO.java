@@ -14,10 +14,10 @@ import java.util.Optional;
 @Dao
 public interface UserDAO {
 
-    @Query("SELECT * from Benutzer")
+    @Query("SELECT * from Benutzer ORDER BY name ASC")
     LiveData<List<User>> getAll();
 
-    @Query(("SELECT * from Benutzer where personalNummer like :id Limit 1"))
+    @Query(("SELECT * from Benutzer where personalNummer = :id Limit 1"))
     LiveData<User> getUserByID(int id);
 
     @Update
@@ -28,6 +28,9 @@ public interface UserDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(User user);
+
+    @Query("DELETE from Benutzer where personalNummer = :id")
+    void deleteUserByID(int id);
 
     @Query("DELETE FROM Benutzer")
     void deleteAll();

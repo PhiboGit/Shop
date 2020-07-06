@@ -5,27 +5,18 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.InputType;
-import android.text.Spanned;
 import android.text.TextWatcher;
-import android.text.method.DigitsKeyListener;
-import android.text.method.KeyListener;
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.room.util.StringUtil;
 
 import com.example.shop.Data.User;
 import com.example.shop.Data.UserViewModel;
@@ -36,9 +27,11 @@ public class FirstFragment extends Fragment {
 
     final int andminID = 00000000;
 
-    UserViewModel viewModel;
-    Button buttonLogin;
+    private UserViewModel viewModel;
+    private Button buttonLogin;
     private List<User> userList;
+    //name from user to add
+    private String nachname;
 
     @Override
     public View onCreateView(
@@ -55,22 +48,16 @@ public class FirstFragment extends Fragment {
 
         buttonLogin = (Button) view.findViewById(R.id.button_login);
         EditText inputText = view.findViewById(R.id.textInputField);
-
-        viewModel.getAllUser().observe(getActivity(), new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                userList = users;
-            }
-        });
-
         //visible password
         inputText.setTransformationMethod(null);
 
-        buttonLogin.setOnClickListener(view1 -> {
+        //observe and update userList
+        viewModel.getAllUser().observe(getActivity(), users -> userList = users);
 
+        //if ID does not exists create user else navigate to secondFragment
+        buttonLogin.setOnClickListener(view1 -> {
             //add new user
             int newUserId = Integer.parseInt(inputText.getText().toString());
-
             if (newUserId == andminID){
                 NavHostFragment.findNavController(FirstFragment.this).navigate(R.id.action_FirstFragment_to_adminFragment);
             }
@@ -84,7 +71,7 @@ public class FirstFragment extends Fragment {
         });
 
         disableButton();
-        //disable enable button on text length
+        //observe inputText and disable enable button on text length
         inputText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -121,15 +108,12 @@ public class FirstFragment extends Fragment {
         NavHostFragment.findNavController(FirstFragment.this).navigate(R.id.action_FirstFragment_to_SecondFragment, bundle);
     }
 
-    private String nachname;
-
     private void openDialog(int userID){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Nachname");
         final EditText input = new EditText(getContext());
         input.setFilters(new InputFilter[] {
                 (cs, start, end, spanned, dStart, dEnd) -> {
-                    // TODO Auto-generated method stub
                     if(cs.equals("")){ // for backspace
                         return cs;
                     }
@@ -165,7 +149,6 @@ public class FirstFragment extends Fragment {
         final EditText input = new EditText(getContext());
         input.setFilters(new InputFilter[] {
                 (cs, start, end, spanned, dStart, dEnd) -> {
-                    // TODO Auto-generated method stub
                     if(cs.equals("")){ // for backspace
                         return cs;
                     }

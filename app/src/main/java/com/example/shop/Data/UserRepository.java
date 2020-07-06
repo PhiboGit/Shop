@@ -1,9 +1,6 @@
 package com.example.shop.Data;
 
 import android.app.Application;
-import android.content.Context;
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
@@ -27,20 +24,14 @@ public class UserRepository {
     }
 
     void update(final User user){
-        UserDatabase.databaseWriteExecutor.execute(() -> {
-            userDAO.update(user);
-        });
+        UserDatabase.databaseWriteExecutor.execute(() -> userDAO.update(user));
     }
 
     void insert(final User user){
-        UserDatabase.databaseWriteExecutor.execute(() -> {
-            userDAO.insertAll(user);
-        });
+        UserDatabase.databaseWriteExecutor.execute(() -> userDAO.insertAll(user));
     }
 
     void deleteUserByID(int id){
-        UserDatabase.databaseWriteExecutor.execute(() -> {
-            userDAO.deleteUserByID(id);
-        });
+        UserDatabase.databaseWriteExecutor.execute(() -> userDAO.deleteUserByID(id));
     }
 }

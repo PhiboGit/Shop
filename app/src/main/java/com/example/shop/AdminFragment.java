@@ -1,9 +1,12 @@
 package com.example.shop;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -11,15 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.text.InputFilter;
-import android.text.InputType;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.shop.Data.User;
 import com.example.shop.Data.UserViewModel;
@@ -49,19 +43,17 @@ public class AdminFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_admin, container, false);
         hideKeyboard(this.getActivity());
 
-        Button buttonBack = rootView.findViewById(R.id.button_back);
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NavHostFragment.findNavController(AdminFragment.this)
-                        .navigate(R.id.action_adminFragment_to_FirstFragment);
-            }
-        });
-
         //Setup RecyclerView
         recyclerView = rootView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        Button buttonBack = rootView.findViewById(R.id.button_back);
+
+        //navigate back
+        buttonBack.setOnClickListener(view -> NavHostFragment.findNavController(AdminFragment.this)
+                .navigate(R.id.action_adminFragment_to_FirstFragment));
+
+        //observe userList and update recyclerView on change
         userViewModel.getAllUser().observe(getActivity(), new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
@@ -71,11 +63,6 @@ public class AdminFragment extends Fragment {
                 }
             }
         });
-
-
-
-
-        // Inflate the layout for this fragment
         return rootView;
     }
 

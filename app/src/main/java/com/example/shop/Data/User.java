@@ -9,7 +9,7 @@ public class User {
     @PrimaryKey
     private int personalNummer;
 
-    private String name = "";
+    private String name;
 
     private int c30, c40, c50, c60, c80, c100, c120, c400, flatWeek;
 

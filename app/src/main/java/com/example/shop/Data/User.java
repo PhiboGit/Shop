@@ -13,6 +13,8 @@ public class User {
 
     private int c30, c40, c50, c60, c80, c100, c120, c400, flatWeek;
 
+    private int currentSchulden;
+
     public User(int personalNummer, String name) {
         this.personalNummer = personalNummer;
         this.name = name;
@@ -31,10 +33,25 @@ public class User {
         this.c120 = user.c120;
         this.c400 = user.c400;
         this.flatWeek = user.flatWeek;
+        this.currentSchulden = user.currentSchulden;
     }
 
-    public int getSchulden() {
-        return c30*30 + c40*40 + c50*50 + c60*60 + c80*80 + c100*100 + c120*120 + c400*400;
+
+    public int getCurrentSchulden() {
+        //currentSchulden = c30*30 + c40*40 + c50*50 + c60*60 + c80*80 + c100*100 + c120*120 + c400*400;
+        return currentSchulden;
+    }
+
+    public void setCurrentSchulden(int currentSchulden) {
+        this.currentSchulden = currentSchulden;
+    }
+
+    public void addCurrentSchulden(int add){
+        currentSchulden += add;
+    }
+
+    public void resetCurrentSchulden(){
+        currentSchulden = 0;
     }
 
 

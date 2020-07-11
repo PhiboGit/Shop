@@ -88,7 +88,7 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
                     currentUser = user;
                     copyCurrentUser = new User(user);
                     textViewName.setText(user.getName());
-                    textViewSchulden.setText(EuroConverter.convertToEuro(user.getSchulden()));
+                    textViewSchulden.setText(EuroConverter.convertToEuro(user.getCurrentSchulden()));
                     if (user.getFlatWeek() == calendarWeek){
                         buttonFlat.setAlpha(.25f);
                         buttonFlat.setClickable(false);
@@ -157,6 +157,7 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
                 buttonFlat.setClickable(false);
                 break;
             case R.id.button_buchen:
+                copyCurrentUser.addCurrentSchulden(betrag);
                 userViewModel.update(copyCurrentUser);
                 NavHostFragment.findNavController(SecondFragment.this)
                         .navigate(R.id.action_SecondFragment_to_FirstFragment);

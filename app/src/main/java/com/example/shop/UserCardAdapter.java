@@ -17,7 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.shop.Data.Converter.EuroConverter;
 import com.example.shop.Data.User;
 import com.example.shop.Data.UserViewModel;
+import com.example.shop.Data.utilities.UserDataCollector;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.CardViewHolder> {
@@ -45,14 +48,17 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.CardVi
     private UserViewModel userViewModel;
     private Activity activity;
     private List<User> userList;
+    private UserDataCollector userDataCollector;
     private View view;
-    final boolean[] userSelected;
+    final List<User> userSelected;
 
 
-    public UserCardAdapter(Activity activity, List<User> userList) {
+
+    public UserCardAdapter(Activity activity, List<User> userList, UserDataCollector userDataCollector) {
         this.userList = userList;
         this.activity = activity;
-        userSelected = new boolean[getItemCount()];
+        this.userDataCollector = userDataCollector;
+        userSelected = new ArrayList<>();
     }
 
     @NonNull
@@ -69,25 +75,26 @@ public class UserCardAdapter extends RecyclerView.Adapter<UserCardAdapter.CardVi
 
         holder.textViewUserName.setText(currentUser.getName());
         holder.textViewUserID.setText(String.valueOf(currentUser.getPersonalNummer()));
-        holder.textViewUserSchulden.setText(EuroConverter.convertToEuro(currentUser.getSchulden()));
+        holder.textViewUserSchulden.setText(EuroConverter.convertToEuro(currentUser.getCurrentSchulden()));
 
         holder.buttonUserDelete.setOnClickListener(view -> openDialog(currentUser.getPersonalNummer(), currentUser.getName()));
 
         holder.layout.setOnClickListener(view -> {
-            if (!userSelected[position]) {
-                userSelected[position] = true;
+            if (!userSelected.contains(currentUser)) {
+                userSelected.add(currentUser);
                 holder.layout.setBackgroundColor(view.getResources().getColor(R.color.colorAccent));
             }
             else {
-                userSelected[position] =false;
+                userSelected.remove(currentUser);
                 holder.layout.setBackgroundColor(view.getResources().getColor(R.color.colorPrimary));
             }
+            userDataCollector.selectedUser(userSelected);
         });
     }
 
     @Override
     public int getItemCount() {
-        return userList.size();
+        return userList != null ? userList.size() : 0;
     }
 
     public void openDialog(int userID, String userName){

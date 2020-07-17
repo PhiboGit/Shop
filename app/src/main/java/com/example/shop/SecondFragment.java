@@ -1,5 +1,6 @@
 package com.example.shop;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
     private User copyCurrentUser;
     private Button buttonFlat;
     private int calendarWeek;
+    private ValueAnimator valueAnimator;
+    private TextView textViewFade;
 
     @Override
     public View onCreateView(
@@ -54,6 +57,8 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
         TextView textViewName = (TextView) view.findViewById(R.id.textView_name);
         textViewBuchung = (TextView) view.findViewById(R.id.textView_buchung);
         TextView textViewSchulden = (TextView) view.findViewById(R.id.textView_schulden);
+        textViewFade = (TextView) view.findViewById(R.id.textViewFade);
+        textViewFade.setAlpha(0.0f);
 
         Button buttonBuchen = (Button) view.findViewById(R.id.button_buchen);
         Button button30 = (Button) view.findViewById(R.id.button_30);
@@ -79,6 +84,18 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
         buttonKaffee.setOnClickListener(this);
         buttonFlat.setOnClickListener(this);
         buttonBack.setOnClickListener(this);
+
+        valueAnimator = ValueAnimator.ofFloat(1f, 0f);
+        valueAnimator.setDuration(2000);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float alpha = (float) animation.getAnimatedValue();
+                textViewFade.setAlpha(alpha);
+            }
+        });
+
+
 
         //observe current User and update View with data
         userViewModel.getUserByID(currentUserID).observe(getActivity(), new Observer<User>() {
@@ -117,36 +134,50 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
                 betrag += 30;
                 copyCurrentUser.setC30(copyCurrentUser.getC30()+1);
                 textViewBuchung.setText(EuroConverter.convertToEuro(betrag));
+                textViewFade.setText("+0,30€");
+                valueAnimator.start();
             break;
             case R.id.button_50:
                 betrag += 50;
                 copyCurrentUser.setC50(copyCurrentUser.getC50()+1);
                 textViewBuchung.setText(EuroConverter.convertToEuro(betrag));
+                textViewFade.setText("+0,50€");
+                valueAnimator.start();
                 break;
             case R.id.button_60:
                 betrag += 60;
                 copyCurrentUser.setC60(copyCurrentUser.getC60()+1);
                 textViewBuchung.setText(EuroConverter.convertToEuro(betrag));
+                textViewFade.setText("+0,60€");
+                valueAnimator.start();
                 break;
             case R.id.button_80:
                 betrag += 80;
                 copyCurrentUser.setC80(copyCurrentUser.getC80()+1);
                 textViewBuchung.setText(EuroConverter.convertToEuro(betrag));
+                textViewFade.setText("+0,80€");
+                valueAnimator.start();
                 break;
             case R.id.button_100:
                 betrag += 100;
                 copyCurrentUser.setC100(copyCurrentUser.getC100()+1);
                 textViewBuchung.setText(EuroConverter.convertToEuro(betrag));
+                textViewFade.setText("+1,00€");
+                valueAnimator.start();
                 break;
             case R.id.button_120:
                 betrag += 120;
                 copyCurrentUser.setC120(copyCurrentUser.getC120()+1);
                 textViewBuchung.setText(EuroConverter.convertToEuro(betrag));
+                textViewFade.setText("+1,20€");
+                valueAnimator.start();
                 break;
             case R.id.button_kaffee:
                 betrag += 40;
                 copyCurrentUser.setC40(copyCurrentUser.getC40()+1);
                 textViewBuchung.setText(EuroConverter.convertToEuro(betrag));
+                textViewFade.setText("+0,40€");
+                valueAnimator.start();
                 break;
             case R.id.button_flat:
                 betrag += 400;
@@ -155,6 +186,8 @@ public class SecondFragment extends Fragment implements View.OnClickListener{
                 copyCurrentUser.setFlatWeek(calendarWeek);
                 buttonFlat.setAlpha(.25f);
                 buttonFlat.setClickable(false);
+                textViewFade.setText("+4,00€");
+                valueAnimator.start();
                 break;
             case R.id.button_buchen:
                 copyCurrentUser.addCurrentSchulden(betrag);

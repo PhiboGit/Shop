@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -73,13 +74,10 @@ public class AdminFragment extends Fragment implements UserDataCollector {
         });
 
         //observe userList and update recyclerView on change
-        userViewModel.getAllUser().observe(getActivity(), new Observer<List<User>>() {
-            @Override
-            public void onChanged(List<User> users) {
-                if (users != null) {
-                    userList = users;
-                    recyclerView.setAdapter(new UserCardAdapter(getActivity(),userList, AdminFragment.this));
-                }
+        userViewModel.getAllUser().observe(getActivity(), users -> {
+            if (users != null) {
+                userList = users;
+                recyclerView.setAdapter(new UserCardAdapter(getActivity(),userList, AdminFragment.this));
             }
         });
         return rootView;

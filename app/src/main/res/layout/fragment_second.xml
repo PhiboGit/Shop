@@ -14,8 +14,6 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="90dp"
         android:text="Kaffe-Flat"
-        android:textColor="@color/colorPrimary"
-        android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/button_120"
         app:layout_constraintTop_toBottomOf="@+id/button_kaffee" />
@@ -80,17 +78,6 @@
         app:layout_constraintHorizontal_bias="0.014"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textview_second"
-        android:layout_width="44dp"
-        android:layout_height="32dp"
-        android:layout_marginBottom="20dp"
-        android:text="Count"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.042"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_30"
@@ -179,6 +166,7 @@
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="100dp"
         android:text="0,00€"
+        android:textAlignment="viewEnd"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -194,5 +182,29 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView_schulden"
         app:layout_constraintEnd_toStartOf="@+id/textView_schulden"
         app:layout_constraintTop_toTopOf="@+id/textView_schulden" />
+
+    <TextView
+        android:id="@+id/textViewFade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="0,00€"
+        android:textAlignment="viewEnd"
+        android:textColor="#DF1E1E"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_buchung"
+        app:layout_constraintEnd_toEndOf="@+id/textView_buchung" />
+
+    <TextView
+        android:id="@+id/textViewSumme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="180dp"
+        android:layout_marginBottom="100dp"
+        android:text="Summe:"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
